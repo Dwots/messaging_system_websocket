@@ -1,0 +1,21 @@
+{
+  "name": "messaging_system_websocket",
+  "version": "1.0.0",
+  "description": "Распределенная система адресного обмена сообщениями на ws, cluster и выделенном DB worker с offline-хранением сообщений.",
+  "main": "server.js",
+  "scripts": {
+    "server": "node server.js",
+    "clients": "node client-master.js",
+    "clients:small": "MESSAGE_COUNT=100 node client-master.js",
+    "clients:offline-demo": "MESSAGE_COUNT=1000 DISCONNECT_MIN_MS=1000 DISCONNECT_MAX_MS=3000 RECONNECT_MIN_MS=500 RECONNECT_MAX_MS=1500 node client-master.js",
+    "client:manual": "node standalone-client.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "ws": "^8.20.0"
+  }
+}

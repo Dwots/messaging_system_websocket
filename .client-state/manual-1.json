@@ -1,0 +1,22 @@
+{
+  "name": "manual-1",
+  "serverUrl": "ws://localhost:8080",
+  "targets": [
+    "manual-2"
+  ],
+  "nextMessageSeq": 10,
+  "sentCount": 10,
+  "receivedCount": 1,
+  "sentByTarget": {
+    "client-0": 2,
+    "client-1": 1,
+    "manual-1": 4,
+    "manual-2": 3
+  },
+  "receivedBySource": {
+    "manual-2": 1
+  },
+  "receivedMessageIds": [
+    "manual-2-manual-1"
+  ]
+}
