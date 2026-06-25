@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 9,
+  "totalBatches": 2,
+  "exportsByPath": {
+    ".understand-anything/.understandignore": [],
+    "client-master.js": [],
+    "client-worker.js": [],
+    "server.js": [],
+    "standalone-client.js": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "RUN_INSTRUCTIONS.md",
+          "language": "markdown",
+          "sizeLines": 341,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "package.json",
+          "language": "json",
+          "sizeLines": 21,
+          "fileCategory": "config"
+        },
+        {
+          "path": "текстовкадлятекста.txt",
+          "language": "txt",
+          "sizeLines": 209,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "RUN_INSTRUCTIONS.md": [],
+        "package.json": [],
+        "текстовкадлятекста.txt": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": ".understand-anything/.understandignore",
+          "language": "unknown",
+          "sizeLines": 33,
+          "fileCategory": "code"
+        },
+        {
+          "path": ".understand-anything/config.json",
+          "language": "json",
+          "sizeLines": 1,
+          "fileCategory": "config"
+        },
+        {
+          "path": "client-master.js",
+          "language": "javascript",
+          "sizeLines": 208,
+          "fileCategory": "code"
+        },
+        {
+          "path": "client-worker.js",
+          "language": "javascript",
+          "sizeLines": 363,
+          "fileCategory": "code"
+        },
+        {
+          "path": "server.js",
+          "language": "javascript",
+          "sizeLines": 707,
+          "fileCategory": "code"
+        },
+        {
+          "path": "standalone-client.js",
+          "language": "javascript",
+          "sizeLines": 275,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".understand-anything/.understandignore": [],
+        ".understand-anything/config.json": [],
+        "client-master.js": [],
+        "client-worker.js": [],
+        "server.js": [],
+        "standalone-client.js": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

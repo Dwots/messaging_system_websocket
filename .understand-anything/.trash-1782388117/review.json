@@ -1,0 +1,26 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'document:текстовкадлятекста.txt' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 20,
+    "totalEdges": 30,
+    "totalLayers": 3,
+    "tourSteps": 7,
+    "nodeTypes": {
+      "document": 2,
+      "config": 1,
+      "file": 4,
+      "function": 13
+    },
+    "edgeTypes": {
+      "configures": 1,
+      "documents": 4,
+      "contains": 13,
+      "calls": 7,
+      "depends_on": 2,
+      "related": 3
+    }
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "200cbe0dbe1f3162818f16b241930a7cd7223a09",
+  "generatedAt": "2026-06-25T11:48:37.592Z",
+  "files": {
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "588a2ee97b28bc895a393a560dad47f6db86ea8117309701e96a02bd88eeeb35",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 34,
+      "hasStructuralAnalysis": false
+    },
+    ".understand-anything/config.json": {
+      "filePath": ".understand-anything/config.json",
+      "contentHash": "92a57d40119389447c9d824b1710815556af58055f633e0b4d7d84e96a63e9da",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "текстовкадлятекста.txt": {
+      "filePath": "текстовкадлятекста.txt",
+      "contentHash": "e3bee387b3369a819a32053641f0a7232b9322e054a20535c0eb2d6fb5ba46fe",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 210,
+      "hasStructuralAnalysis": false
+    },
+    "client-master.js": {
+      "filePath": "client-master.js",
+      "contentHash": "909f559bbf5402e7d47cdbf6d6a9296a3b8251b3c991dc717df2bdcdc823adf5",
+      "functions": [
+        {
+          "name": "ensureStats",
+          "params": [
+            "name"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "totals",
+          "params": [],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "pairKey",
+          "params": [
+            "from",
+            "to"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "pairSummary",
+          "params": [],
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "maybeFinish",
+          "params": [],
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "startAllClients",
+          "params": [],
+          "exported": false,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 209,
+      "hasStructuralAnalysis": true
+    },
+    "client-worker.js": {
+      "filePath": "client-worker.js",
+      "contentHash": "c8a8fc305833fcb5d88ba210e33e8c870e5b667c866f3595a8abbda4e37f9517",
+      "functions": [
+        {
+          "name": "randomBetween",
+          "params": [
+            "min",
+            "max"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "incrementCounter",
+          "params": [
+            "target",
+            "key"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "notify",
+          "params": [
+            "payload"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "sendStats",
+          "params": [],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "randomTarget",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "isCurrentRunMessage",
+          "params": [
+            "messageId"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "clearReconnectTimer",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "clearRandomDisconnectTimer",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "scheduleSend",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "maybeMarkSentDone",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "sendBatch",
+          "params": [],
+          "exported": false,
+          "lineCount": 59
+        },
+        {
+          "name": "scheduleReconnect",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "scheduleRandomDisconnect",
+          "params": [],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "connect",
+          "params": [],
+          "exported": false,
+          "lineCount": 90
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 364,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "d85847d76206329243151ff2cac7d8aab9c3d4de98399bed3efb4277d8fba4ee",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "RUN_INSTRUCTIONS.md": {
+      "filePath": "RUN_INSTRUCTIONS.md",
+      "contentHash": "20207eb272b8781cb54d8dbd1b01a341d026caa097d6c033e68d13da391df6b1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 342,
+      "hasStructuralAnalysis": true
+    },
+    "server.js": {
+      "filePath": "server.js",
+      "contentHash": "20fa1cba7791c3b0c259befa5007274efc359fa313a101e1ce8f44b2fe5554ba",
+      "functions": [
+        {
+          "name": "safeJsonParse",
+          "params": [
+            "raw"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "sendJson",
+          "params": [
+            "ws",
+            "payload",
+            "callback"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "normalizeText",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "runDbWorker",
+          "params": [],
+          "exported": false,
+          "lineCount": 212
+        },
+        {
+          "name": "runServerWorker",
+          "params": [],
+          "exported": false,
+          "lineCount": 221
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 708,
+      "hasStructuralAnalysis": true
+    },
+    "standalone-client.js": {
+      "filePath": "standalone-client.js",
+      "contentHash": "b28f334588bd9f89466e1e72118a6ea84f1df9d1573bbcdf8e199226fd8b98d4",
+      "functions": [
+        {
+          "name": "loadState",
+          "params": [],
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "saveState",
+          "params": [],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "incrementCounter",
+          "params": [
+            "target",
+            "key"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "connect",
+          "params": [],
+          "exported": false,
+          "lineCount": 76
+        },
+        {
+          "name": "sendMessage",
+          "params": [
+            "to",
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 276,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

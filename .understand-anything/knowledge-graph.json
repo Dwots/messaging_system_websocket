@@ -1,0 +1,656 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "messaging_system_websocket",
+    "languages": [
+      "javascript",
+      "json",
+      "markdown"
+    ],
+    "frameworks": [],
+    "description": "Распределённая система адресного обмена сообщениями по WebSocket: Node cluster (primary + WS-воркеры по числу CPU + отдельный DB-worker) с offline-хранением сообщений в SQLite (node:sqlite).",
+    "analyzedAt": "2026-06-25T11:47:53.118Z",
+    "gitCommitHash": "200cbe0dbe1f3162818f16b241930a7cd7223a09"
+  },
+  "nodes": [
+    {
+      "id": "document:RUN_INSTRUCTIONS.md",
+      "type": "document",
+      "name": "RUN_INSTRUCTIONS.md",
+      "filePath": "RUN_INSTRUCTIONS.md",
+      "summary": "Подробная инструкция по запуску распределённой системы обмена сообщениями: старт сервера, запуск 10 клиентов, быстрый тест, демо offline-режима, ручные внешние клиенты, хранение состояния и устранение частых проблем.",
+      "tags": [
+        "documentation",
+        "entry-point",
+        "руководство",
+        "websocket",
+        "запуск"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Markdown-руководство из 11 разделов, описывает команды npm и переменные окружения (MESSAGE_COUNT, DISCONNECT_*, RECONNECT_*) для управления сценариями запуска."
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "npm-манифест проекта: точка входа server.js, единственная зависимость ws, набор скриптов для запуска сервера и клиентов (включая offline-демо с переменными окружения).",
+      "tags": [
+        "configuration",
+        "npm",
+        "build-system",
+        "websocket",
+        "dependencies"
+      ],
+      "complexity": "simple",
+      "languageNotes": "type: commonjs; скрипты задают сценарии через переменные окружения (MESSAGE_COUNT, DISCONNECT_*, RECONNECT_*)."
+    },
+    {
+      "id": "document:текстовкадлятекста.txt",
+      "type": "document",
+      "name": "текстовкадлятекста.txt",
+      "filePath": "текстовкадлятекста.txt",
+      "summary": "Текстовый файл с заметками/черновыми записями по проекту, не имеющий структурного отношения к коду.",
+      "tags": [
+        "documentation",
+        "заметки",
+        "notes",
+        "текст"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:server.js",
+      "type": "file",
+      "name": "server.js",
+      "filePath": "server.js",
+      "summary": "Главный процесс системы: primary форкает по числу CPU WebSocket-воркеров и один выделенный DB-воркер, маршрутизирует сообщения между подключёнными клиентами и сохраняет offline-сообщения в SQLite через DB-воркер.",
+      "tags": [
+        "entry-point",
+        "service",
+        "message-routing",
+        "websocket",
+        "cluster"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Использует Node cluster: один файл исполняет разные роли (primary / server worker / db worker) в зависимости от cluster.isPrimary и env-переменной роли. Межпроцессное взаимодействие через IPC (process.send / process.on)."
+    },
+    {
+      "id": "function:server.js:runServerWorker",
+      "type": "function",
+      "name": "runServerWorker",
+      "filePath": "server.js",
+      "lineRange": [
+        487,
+        707
+      ],
+      "summary": "Логика WebSocket-воркера: поднимает HTTP+WS сервер, обрабатывает регистрацию клиентов, доставку локальных сообщений, маршрутизацию через IPC к primary и доставку offline-сообщений при подключении.",
+      "tags": [
+        "websocket",
+        "api-handler",
+        "message-routing",
+        "event-handler"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:server.js:runDbWorker",
+      "type": "function",
+      "name": "runDbWorker",
+      "filePath": "server.js",
+      "lineRange": [
+        274,
+        485
+      ],
+      "summary": "Логика выделенного DB-воркера: инициализирует пул SQLite-соединений, батчево записывает и удаляет offline-сообщения, отвечает на IPC-запросы выборки/сохранения сообщений.",
+      "tags": [
+        "database",
+        "service",
+        "serialization",
+        "offline-storage"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Батчинг записей и удалений через setInterval с принудительным flush; пул prepared statements для производительности SQLite."
+    },
+    {
+      "id": "function:server.js:sendJson",
+      "type": "function",
+      "name": "sendJson",
+      "filePath": "server.js",
+      "lineRange": [
+        26,
+        35
+      ],
+      "summary": "Безопасно сериализует payload в JSON и отправляет его через WebSocket-соединение с опциональным callback.",
+      "tags": [
+        "utility",
+        "serialization",
+        "websocket"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client-master.js",
+      "type": "file",
+      "name": "client-master.js",
+      "filePath": "client-master.js",
+      "summary": "Мастер нагрузочного тестирования: форкает N процессов client-worker.js, агрегирует статистику по парам отправитель/получатель и выводит итоговый отчёт по завершении.",
+      "tags": [
+        "entry-point",
+        "load-testing",
+        "aggregation",
+        "cluster"
+      ],
+      "complexity": "moderate",
+      "languageNotes": "Форкает client-worker.js через child_process.fork со строковым путём (не статический import), собирает stats через IPC-сообщения от воркеров."
+    },
+    {
+      "id": "function:client-master.js:pairSummary",
+      "type": "function",
+      "name": "pairSummary",
+      "filePath": "client-master.js",
+      "lineRange": [
+        51,
+        79
+      ],
+      "summary": "Агрегирует статистику отправленных и полученных сообщений по парам отправитель/получатель и подсчитывает завершённые пары.",
+      "tags": [
+        "aggregation",
+        "utility",
+        "statistics"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client-master.js:maybeFinish",
+      "type": "function",
+      "name": "maybeFinish",
+      "filePath": "client-master.js",
+      "lineRange": [
+        81,
+        109
+      ],
+      "summary": "Проверяет завершение всех воркеров, печатает агрегированный итоговый отчёт, рассылает команду завершения и выходит из процесса.",
+      "tags": [
+        "aggregation",
+        "event-handler",
+        "lifecycle"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client-master.js:totals",
+      "type": "function",
+      "name": "totals",
+      "filePath": "client-master.js",
+      "lineRange": [
+        35,
+        45
+      ],
+      "summary": "Суммирует счётчики статистики по всем воркерам в единый агрегат.",
+      "tags": [
+        "aggregation",
+        "utility",
+        "statistics"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:client-worker.js",
+      "type": "file",
+      "name": "client-worker.js",
+      "filePath": "client-worker.js",
+      "summary": "Один автоматизированный клиент для нагрузочного тестирования: подключается к серверу по WebSocket, регистрируется, отправляет и принимает сообщения, обрабатывает переподключение и offline-сценарии.",
+      "tags": [
+        "websocket",
+        "load-testing",
+        "client",
+        "event-handler"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Запускается как форкнутый процесс client-master.js; статистику отправляет родителю через process.send. Содержит логику случайных отключений и экспоненциального backoff для переподключения."
+    },
+    {
+      "id": "function:client-worker.js:connect",
+      "type": "function",
+      "name": "connect",
+      "filePath": "client-worker.js",
+      "lineRange": [
+        209,
+        298
+      ],
+      "summary": "Устанавливает WebSocket-соединение с сервером, регистрирует клиента, навешивает обработчики входящих сообщений с дедупликацией, закрытия и ошибок, запускает отправку и переподключение.",
+      "tags": [
+        "websocket",
+        "event-handler",
+        "client",
+        "reconnect"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:client-worker.js:sendBatch",
+      "type": "function",
+      "name": "sendBatch",
+      "filePath": "client-worker.js",
+      "lineRange": [
+        112,
+        170
+      ],
+      "summary": "Отправляет пакет сообщений случайным получателям через WebSocket, обновляет счётчики отправки и планирует следующую отправку.",
+      "tags": [
+        "websocket",
+        "load-testing",
+        "messaging"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client-worker.js:scheduleReconnect",
+      "type": "function",
+      "name": "scheduleReconnect",
+      "filePath": "client-worker.js",
+      "lineRange": [
+        172,
+        189
+      ],
+      "summary": "Планирует повторное подключение с экспоненциальным backoff и случайным джиттером.",
+      "tags": [
+        "reconnect",
+        "websocket",
+        "resilience"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:client-worker.js:scheduleRandomDisconnect",
+      "type": "function",
+      "name": "scheduleRandomDisconnect",
+      "filePath": "client-worker.js",
+      "lineRange": [
+        191,
+        207
+      ],
+      "summary": "Планирует случайное отключение сокета для эмуляции нестабильной сети при нагрузочном тестировании.",
+      "tags": [
+        "websocket",
+        "load-testing",
+        "resilience"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:standalone-client.js",
+      "type": "file",
+      "name": "standalone-client.js",
+      "filePath": "standalone-client.js",
+      "summary": "Интерактивный ручной CLI-клиент: команды send/stats/targets/quit, подключается к серверу по WebSocket и сохраняет состояние в файл .client-state.",
+      "tags": [
+        "websocket",
+        "cli",
+        "client",
+        "interactive"
+      ],
+      "complexity": "complex",
+      "languageNotes": "Персистит состояние клиента (счётчики, дедупликация принятых сообщений) на диск через fs для восстановления между запусками."
+    },
+    {
+      "id": "function:standalone-client.js:connect",
+      "type": "function",
+      "name": "connect",
+      "filePath": "standalone-client.js",
+      "lineRange": [
+        79,
+        154
+      ],
+      "summary": "Устанавливает WebSocket-соединение, регистрирует клиента, обрабатывает входящие сообщения с дедупликацией и сохранением состояния, реализует переподключение с backoff.",
+      "tags": [
+        "websocket",
+        "event-handler",
+        "client",
+        "reconnect"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:standalone-client.js:sendMessage",
+      "type": "function",
+      "name": "sendMessage",
+      "filePath": "standalone-client.js",
+      "lineRange": [
+        156,
+        184
+      ],
+      "summary": "Отправляет текстовое сообщение указанному получателю через WebSocket, обновляет счётчики и сохраняет состояние.",
+      "tags": [
+        "websocket",
+        "messaging",
+        "client"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:standalone-client.js:loadState",
+      "type": "function",
+      "name": "loadState",
+      "filePath": "standalone-client.js",
+      "lineRange": [
+        38,
+        57
+      ],
+      "summary": "Загружает сохранённое состояние клиента из файла .client-state, восстанавливая счётчики и множество принятых message id.",
+      "tags": [
+        "serialization",
+        "persistence",
+        "utility"
+      ],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "config:package.json",
+      "target": "file:server.js",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "document:RUN_INSTRUCTIONS.md",
+      "target": "file:server.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:RUN_INSTRUCTIONS.md",
+      "target": "file:client-master.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:RUN_INSTRUCTIONS.md",
+      "target": "file:client-worker.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:RUN_INSTRUCTIONS.md",
+      "target": "file:standalone-client.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:server.js",
+      "target": "function:server.js:runServerWorker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server.js",
+      "target": "function:server.js:runDbWorker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:server.js",
+      "target": "function:server.js:sendJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:server.js:runServerWorker",
+      "target": "function:server.js:sendJson",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:server.js:runServerWorker",
+      "target": "function:server.js:runDbWorker",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client-master.js",
+      "target": "function:client-master.js:pairSummary",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client-master.js",
+      "target": "function:client-master.js:maybeFinish",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client-master.js",
+      "target": "function:client-master.js:totals",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:client-master.js:maybeFinish",
+      "target": "function:client-master.js:totals",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client-master.js:maybeFinish",
+      "target": "function:client-master.js:pairSummary",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client-master.js",
+      "target": "file:client-worker.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:client-worker.js",
+      "target": "function:client-worker.js:connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client-worker.js",
+      "target": "function:client-worker.js:sendBatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client-worker.js",
+      "target": "function:client-worker.js:scheduleReconnect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:client-worker.js",
+      "target": "function:client-worker.js:scheduleRandomDisconnect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:client-worker.js:connect",
+      "target": "function:client-worker.js:sendBatch",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client-worker.js:connect",
+      "target": "function:client-worker.js:scheduleReconnect",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client-worker.js:connect",
+      "target": "function:client-worker.js:scheduleRandomDisconnect",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:client-worker.js:scheduleReconnect",
+      "target": "function:client-worker.js:connect",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:client-worker.js",
+      "target": "file:server.js",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:standalone-client.js",
+      "target": "function:standalone-client.js:connect",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:standalone-client.js",
+      "target": "function:standalone-client.js:sendMessage",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:standalone-client.js",
+      "target": "function:standalone-client.js:loadState",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "function:standalone-client.js:sendMessage",
+      "target": "function:standalone-client.js:loadState",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:standalone-client.js",
+      "target": "file:server.js",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:server",
+      "name": "Серверный слой",
+      "description": "Главный backend-процесс системы: primary форкает WebSocket-воркеры по числу CPU и выделенный DB-воркер через Node cluster, маршрутизирует сообщения между клиентами и сохраняет offline-сообщения в SQLite.",
+      "nodeIds": [
+        "file:server.js"
+      ]
+    },
+    {
+      "id": "layer:client",
+      "name": "Клиентский слой",
+      "description": "WebSocket-клиенты системы: мастер нагрузочного тестирования с агрегацией статистики, отдельный автоматизированный client-worker и интерактивный CLI-клиент для ручной отправки сообщений.",
+      "nodeIds": [
+        "file:client-master.js",
+        "file:client-worker.js",
+        "file:standalone-client.js"
+      ]
+    },
+    {
+      "id": "layer:project-support",
+      "name": "Документация и конфигурация",
+      "description": "npm-манифест проекта с зависимостью ws и скриптами запуска, инструкция по запуску распределённой системы и черновые текстовые заметки.",
+      "nodeIds": [
+        "config:package.json",
+        "document:RUN_INSTRUCTIONS.md",
+        "document:текстовкадлятекста.txt"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Как запустить систему",
+      "description": "Начните с RUN_INSTRUCTIONS.md — здесь описано, что вообще представляет собой проект и как его запустить: старт сервера, запуск 10 клиентов, быстрый тест, демонстрация offline-режима и ручные внешние клиенты. Этот документ задаёт карту всей системы и объясняет, какие процессы участвуют в обмене сообщениями. Используйте его как путеводитель по остальным шагам тура.",
+      "nodeIds": [
+        "document:RUN_INSTRUCTIONS.md"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Манифест и точка входа",
+      "description": "package.json фиксирует точку входа server.js, единственную зависимость ws и набор npm-скриптов для запуска сервера и клиентов (включая offline-демо через переменные окружения). Просмотр скриптов показывает все режимы работы системы ещё до чтения кода. Команды отсюда — это те самые команды, которые вы видели в инструкции из шага 1.",
+      "nodeIds": [
+        "config:package.json"
+      ],
+      "languageLesson": "Блок scripts в package.json — это короткие алиасы для команд запуска. Переменные окружения (VAR=value node ...) часто используются, чтобы переключать поведение одного и того же скрипта, например включать offline-демо без отдельного файла."
+    },
+    {
+      "order": 3,
+      "title": "Сервер: cluster и маршрутизация",
+      "description": "server.js — сердце системы и её главная точка входа (наибольший fan-in в графе). Primary-процесс через Node cluster форкает по числу CPU WebSocket-воркеров плюс один выделенный DB-воркер, маршрутизирует сообщения между подключёнными клиентами и сохраняет offline-сообщения в SQLite. Это слой, на котором держится вся остальная архитектура из шага 1.",
+      "nodeIds": [
+        "file:server.js"
+      ],
+      "languageLesson": "Node cluster позволяет одному приложению использовать все ядра CPU: primary-процесс через fork() создаёт несколько worker-процессов, а взаимодействие между ними идёт по IPC. Здесь WebSocket-воркеры обрабатывают соединения, а отдельный DB-воркер сериализует доступ к SQLite."
+    },
+    {
+      "order": 4,
+      "title": "Протокол и offline-хранение",
+      "description": "Внутри server.js функции runServerWorker, runDbWorker и sendJson реализуют сам протокол обмена: WS-воркер принимает JSON-сообщения, через sendJson доставляет их адресату, а при offline-получателе передаёт сообщение DB-воркеру для сохранения в SQLite и последующей доставки. Здесь видно ядро бизнес-логики — register, routing, offline store/deliver/ack. Это раскрывает, как именно работает обещанный в инструкции offline-режим.",
+      "nodeIds": [
+        "file:server.js"
+      ],
+      "languageLesson": "node:sqlite — встроенный синхронный SQLite-модуль Node. Чтобы синхронные запросы к БД не блокировали обработку WebSocket-соединений, доступ к базе вынесен в отдельный DB-воркер, а WS-воркеры общаются с ним через IPC-сообщения."
+    },
+    {
+      "order": 5,
+      "title": "Автоматический клиент",
+      "description": "client-worker.js — это один автоматизированный клиент: он подключается к серверу по WebSocket, регистрируется, отправляет и принимает сообщения и сам обрабатывает переподключение и offline-сценарии. Именно этот файл «общается» с протоколом сервера из шагов 3-4 в роли клиента. Ключевые функции connect, sendBatch, scheduleReconnect и scheduleRandomDisconnect образуют жизненный цикл соединения.",
+      "nodeIds": [
+        "file:client-worker.js"
+      ],
+      "languageLesson": "Устойчивость WebSocket-клиента строится на цикле connect -> при разрыве scheduleReconnect -> снова connect. Случайные отключения (scheduleRandomDisconnect) намеренно имитируют нестабильную сеть, чтобы проверить offline-доставку и ack на стороне сервера."
+    },
+    {
+      "order": 6,
+      "title": "Мастер нагрузочного теста",
+      "description": "client-master.js — мастер нагрузочного тестирования: он форкает N процессов client-worker.js из шага 5, собирает от них статистику по парам отправитель/получатель и по завершении выводит итоговый отчёт. Функции pairSummary, totals и maybeFinish отвечают за агрегацию результатов. Это клиентский аналог серверного cluster: один управляющий процесс координирует множество рабочих.",
+      "nodeIds": [
+        "file:client-master.js"
+      ],
+      "languageLesson": "Тот же паттерн fork(), что и на сервере, но в роли управляющего здесь прикладной мастер: он порождает воркеры и собирает их статистику через IPC. maybeFinish — типичный приём «завершить, когда отчитались все воркеры»."
+    },
+    {
+      "order": 7,
+      "title": "Ручной CLI-клиент",
+      "description": "standalone-client.js — интерактивный ручной клиент с командами send/stats/targets/quit, который подключается к серверу по WebSocket и хранит состояние в файле .client-state. В отличие от автоматического client-worker из шага 5, он управляется человеком и удобен для ручной проверки доставки и offline-сценариев. Функции connect, sendMessage и loadState обеспечивают подключение, отправку и восстановление состояния между запусками.",
+      "nodeIds": [
+        "file:standalone-client.js"
+      ],
+      "languageLesson": "Сохранение состояния клиента в локальный файл (.client-state) позволяет переживать перезапуски: при старте loadState восстанавливает прошлую сессию, что важно для проверки доставки сообщений, накопленных пока клиент был offline."
+    }
+  ]
+}

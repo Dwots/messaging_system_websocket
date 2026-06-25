@@ -1,0 +1,177 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "RUN_INSTRUCTIONS.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 341,
+      "nonEmptyLines": 232,
+      "sections": [
+        {
+          "heading": "Инструкция по запуску системы",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "1. Что должно быть установлено",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "2. Запуск сервера",
+          "level": 2,
+          "line": 21
+        },
+        {
+          "heading": "3. Запуск основных 10 клиентов",
+          "level": 2,
+          "line": 54
+        },
+        {
+          "heading": "4. Быстрый тест",
+          "level": 2,
+          "line": 100
+        },
+        {
+          "heading": "5. Демо offline-режима",
+          "level": 2,
+          "line": 117
+        },
+        {
+          "heading": "6. Запуск ручного внешнего клиента",
+          "level": 2,
+          "line": 144
+        },
+        {
+          "heading": "7. Запуск двух ручных клиентов",
+          "level": 2,
+          "line": 184
+        },
+        {
+          "heading": "8. Где хранится состояние",
+          "level": 2,
+          "line": 213
+        },
+        {
+          "heading": "9. Как остановить систему",
+          "level": 2,
+          "line": 229
+        },
+        {
+          "heading": "10. Частые проблемы",
+          "level": 2,
+          "line": 255
+        },
+        {
+          "heading": "Сервер не запущен",
+          "level": 3,
+          "line": 257
+        },
+        {
+          "heading": "Имя ручного клиента уже занято",
+          "level": 3,
+          "line": 265
+        },
+        {
+          "heading": "После отправки всех сообщений система ещё ждёт",
+          "level": 3,
+          "line": 283
+        },
+        {
+          "heading": "received стало больше, чем sent",
+          "level": 3,
+          "line": 302
+        },
+        {
+          "heading": "11. Основные команды",
+          "level": 2,
+          "line": 321
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 16
+      }
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 21,
+      "nonEmptyLines": 21,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "version",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "description",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "main",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "scripts",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "keywords",
+          "level": 1,
+          "line": 14
+        },
+        {
+          "heading": "author",
+          "level": 1,
+          "line": 15
+        },
+        {
+          "heading": "license",
+          "level": 1,
+          "line": 16
+        },
+        {
+          "heading": "type",
+          "level": 1,
+          "line": 17
+        },
+        {
+          "heading": "dependencies",
+          "level": 1,
+          "line": 18
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": "текстовкадлятекста.txt",
+      "language": "txt",
+      "fileCategory": "docs",
+      "totalLines": 210,
+      "nonEmptyLines": 154,
+      "metrics": {}
+    }
+  ]
+}

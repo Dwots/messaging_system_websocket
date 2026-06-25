@@ -1,0 +1,14 @@
+{
+  "projectRoot": "C:/Users/kirill/Documents/vscode/FigZnaet/Exams/JS/src/messaging_system_websocket",
+  "files": [
+    {"path": ".understand-anything/.understandignore", "language": "unknown", "fileCategory": "code"},
+    {"path": ".understand-anything/config.json", "language": "json", "fileCategory": "config"},
+    {"path": "текстовкадлятекста.txt", "language": "txt", "fileCategory": "docs"},
+    {"path": "client-master.js", "language": "javascript", "fileCategory": "code"},
+    {"path": "client-worker.js", "language": "javascript", "fileCategory": "code"},
+    {"path": "package.json", "language": "json", "fileCategory": "config"},
+    {"path": "RUN_INSTRUCTIONS.md", "language": "markdown", "fileCategory": "docs"},
+    {"path": "server.js", "language": "javascript", "fileCategory": "code"},
+    {"path": "standalone-client.js", "language": "javascript", "fileCategory": "code"}
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "scriptCompleted": true,
+  "files": [
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "текстовкадлятекста.txt",
+      "language": "txt",
+      "sizeLines": 209,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "client-master.js",
+      "language": "javascript",
+      "sizeLines": 208,
+      "fileCategory": "code"
+    },
+    {
+      "path": "client-worker.js",
+      "language": "javascript",
+      "sizeLines": 363,
+      "fileCategory": "code"
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": "RUN_INSTRUCTIONS.md",
+      "language": "markdown",
+      "sizeLines": 341,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "server.js",
+      "language": "javascript",
+      "sizeLines": 707,
+      "fileCategory": "code"
+    },
+    {
+      "path": "standalone-client.js",
+      "language": "javascript",
+      "sizeLines": 275,
+      "fileCategory": "code"
+    }
+  ],
+  "totalFiles": 9,
+  "filteredByIgnore": 3,
+  "estimatedComplexity": "small",
+  "stats": {
+    "filesScanned": 9,
+    "byCategory": {
+      "code": 5,
+      "config": 2,
+      "docs": 2
+    },
+    "byLanguage": {
+      "unknown": 1,
+      "json": 2,
+      "txt": 1,
+      "javascript": 4,
+      "markdown": 1
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 9,
+    "filesWithImports": 0,
+    "totalEdges": 0
+  },
+  "importMap": {
+    ".understand-anything/.understandignore": [],
+    ".understand-anything/config.json": [],
+    "текстовкадлятекста.txt": [],
+    "client-master.js": [],
+    "client-worker.js": [],
+    "package.json": [],
+    "RUN_INSTRUCTIONS.md": [],
+    "server.js": [],
+    "standalone-client.js": []
+  }
+}
