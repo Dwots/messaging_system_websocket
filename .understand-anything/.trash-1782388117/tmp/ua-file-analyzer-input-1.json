@@ -1,9 +1,0 @@
-{
-  "projectRoot": "C:/Users/kirill/Documents/vscode/FigZnaet/Exams/JS/src/messaging_system_websocket",
-  "batchFiles": [
-    {"path": "RUN_INSTRUCTIONS.md", "language": "markdown", "sizeLines": 341, "fileCategory": "docs"},
-    {"path": "package.json", "language": "json", "sizeLines": 21, "fileCategory": "config"},
-    {"path": "текстовкадлятекста.txt", "language": "txt", "sizeLines": 209, "fileCategory": "docs"}
-  ],
-  "batchImportData": {"RUN_INSTRUCTIONS.md":[],"package.json":[],"текстовкадлятекста.txt":[]}
-}
